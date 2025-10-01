@@ -1,0 +1,54 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: mastercard-send-service
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
+
+mastercard:
+  send:
+    base-url: https://sandbox.api.mastercard.com
+    # Use environment variables or secrets for the following values in real deployments
+    consumer-key: ${MASTERCARD_CONSUMER_KEY:}
+    key-file: ${MASTERCARD_SIGNING_KEY_FILE:}
+    key-alias: ${MASTERCARD_SIGNING_KEY_ALIAS:}
+    key-password: ${MASTERCARD_SIGNING_KEY_PASSWORD:}
+    signing-disabled: ${MASTERCARD_SIGNING_DISABLED:false}
+    partner-id: ${MASTERCARD_PARTNER_ID:partner-123}
+    accept-language: ${MASTERCARD_ACCEPT_LANGUAGE:en-US}
+    mtls:
+      enabled: false
+      key-store: ${MASTERCARD_MTLS_KEYSTORE:}
+      key-store-password: ${MASTERCARD_MTLS_KEYSTORE_PASSWORD:}
+      trust-store: ${MASTERCARD_MTLS_TRUSTSTORE:}
+      trust-store-password: ${MASTERCARD_MTLS_TRUSTSTORE_PASSWORD:}
+    api-paths:
+      create-transfer: /send/v1/partners/{partnerId}/transactions
+      transfer-status: /send/v1/partners/{partnerId}/transactions/{id}
+    webhook:
+      enabled: false
+      secret: ${MASTERCARD_WEBHOOK_SECRET:}
+      signature-header: X-Signature
+
+resilience4j:
+  retry:
+    instances:
+      sendApi:
+        max-attempts: 3
+        wait-duration: 200ms
+  circuitbreaker:
+    instances:
+      sendApi:
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        failure-rate-threshold: 50
+
