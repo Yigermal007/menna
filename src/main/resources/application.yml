@@ -25,6 +25,7 @@ mastercard:
     signing-disabled: ${MASTERCARD_SIGNING_DISABLED:false}
     partner-id: ${MASTERCARD_PARTNER_ID:partner-123}
     accept-language: ${MASTERCARD_ACCEPT_LANGUAGE:en-US}
+    client-reference-id: ${MASTERCARD_CLIENT_REFERENCE_ID:}
     mtls:
       enabled: false
       key-store: ${MASTERCARD_MTLS_KEYSTORE:}

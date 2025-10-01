@@ -14,6 +14,7 @@ public class MastercardSendProperties {
     private String partnerId;
     private String acceptLanguage;
     private String userAgent = "mastercard-send-service/1.0";
+    private String clientReferenceId;
 
     private Mtls mtls = new Mtls();
     private ApiPaths apiPaths = new ApiPaths();
@@ -80,6 +81,9 @@ public class MastercardSendProperties {
 
     public String getUserAgent() { return userAgent; }
     public void setUserAgent(String userAgent) { this.userAgent = userAgent; }
+
+    public String getClientReferenceId() { return clientReferenceId; }
+    public void setClientReferenceId(String clientReferenceId) { this.clientReferenceId = clientReferenceId; }
 
     public Mtls getMtls() {
         return mtls;
@@ -153,6 +157,9 @@ public class MastercardSendProperties {
         private String transferStatus = "/send/v1/partners/{partnerId}/transactions/{id}";
         private String quote = "/send/v1/partners/{partnerId}/quotes";
         private String eligibility = "/send/v1/partners/{partnerId}/eligibility";
+        private String cancelTransfer = "/send/v1/partners/{partnerId}/transactions/{id}/cancel";
+        private String reverseTransfer = "/send/v1/partners/{partnerId}/transactions/{id}/reverse";
+        private String transferDetails = "/send/v1/partners/{partnerId}/transactions/{id}/details";
 
         public String getCreateTransfer() {
             return createTransfer;
@@ -175,6 +182,15 @@ public class MastercardSendProperties {
 
         public String getEligibility() { return eligibility; }
         public void setEligibility(String eligibility) { this.eligibility = eligibility; }
+
+        public String getCancelTransfer() { return cancelTransfer; }
+        public void setCancelTransfer(String cancelTransfer) { this.cancelTransfer = cancelTransfer; }
+
+        public String getReverseTransfer() { return reverseTransfer; }
+        public void setReverseTransfer(String reverseTransfer) { this.reverseTransfer = reverseTransfer; }
+
+        public String getTransferDetails() { return transferDetails; }
+        public void setTransferDetails(String transferDetails) { this.transferDetails = transferDetails; }
     }
 
     public static class Webhook {
